@@ -1,0 +1,9 @@
+[[https://github.com/ROCKTAKEY/ivy-migemo][https://img.shields.io/github/tag/ROCKTAKEY/ivy-migemo.svg?style=flat-square]]
+[[file:LICENSE][https://img.shields.io/github/license/ROCKTAKEY/ivy-migemo.svg?style=flat-square]]
+[[https://github.com/ROCKTAKEY/ivy-migemo/actions][https://img.shields.io/github/workflow/status/ROCKTAKEY/ivy-migemo/CI/master.svg?style=flat-square]]
+[[https://codecov.io/gh/ROCKTAKEY/ivy-migemo?branch=master][https://img.shields.io/codecov/c/github/ROCKTAKEY/ivy-migemo/master.svg?style=flat-square]]
+* Use migemo on ivy.
+
+* How to Use?
+* License
+  This package is licensed by GPLv3. See [[file:LICENSE][LICENSE]].

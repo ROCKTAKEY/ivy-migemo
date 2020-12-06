@@ -1,0 +1,6 @@
+(source gnu melpa)
+
+(package (ivy-migemo
+          (recipe . (:fetcher github :repo "ROCKTAKEY/ivy-migemo"))))
+
+(dev-dependency undercover)
