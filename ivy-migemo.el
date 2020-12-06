@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 0.1.0
+;; Version: 0.1.1
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -23,8 +23,26 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-
 ;;
+;;; Use migemo on ivy.
+;;; How to Use?
+;;
+;;     ;; Toggle migemo and fuzzy by command.
+;;     (define-key ivy-minibuffer-map (kbd "M-f")
+;;     (define-key ivy-minibuffer-map (kbd "M-m")
+;;
+;;     ;; If you want to defaultly use migemo on swiper and counsel-find-file:
+;;     (setq ivy-re-builders-alist '((t . ivy--regex-plus)
+;;                                   (swiper . ivy-migemo--regex-plus)
+;;                                   (counsel-find-file . ivy-migemo--regex-plus))
+;;                                   ;(counsel-other-function . ivy-migemo--regex-plus)
+;;                                   )
+;;
+;;
+;;; License
+;;   This package is licensed by GPLv3.
+
+
 
 ;;; Code:
 
