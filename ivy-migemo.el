@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 0.1.1
+;; Version: 0.1.2
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -54,11 +54,14 @@
   :group 'ivy
   :prefix "ivy-migemo-")
 
+(defvar ivy-migemo--regex-hash (make-hash-table :test #'equal)
+  "Store pre-computed regex.")
+
 (defun ivy-migemo--regex (str &optional greedy)
   "Same as `ivy--regex' except using migemo.
 Make regex sequence from STR (greedily if GREEDY is non-nil)."
   (let ((hashed (unless greedy
-                  (gethash str ivy--regex-hash))))
+                  (gethash str ivy-migemo--regex-hash))))
     (if hashed
         (progn
           (setq ivy--subexps (car hashed))
@@ -88,7 +91,7 @@ Make regex sequence from STR (greedily if GREEDY is non-nil)."
                            subs
                            (if greedy ".*" ".*?"))
                           nil t))))
-                    ivy--regex-hash)))))
+                    ivy-migemo--regex-hash)))))
 
 (defun ivy-migemo--regex-plus (str)
   "Same as `ivy--regex-plus' except using migemo.
