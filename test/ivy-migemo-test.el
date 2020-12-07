@@ -36,6 +36,13 @@
 
 (require 'ert)
 
+(setq migemo-dictionary
+      (pcase system-type
+        (`windows-nt
+         (expand-file-name
+          "dict/utf-8/migemo-dict"
+          (file-name-directory (locate-file "cmigemo.exe" exec-path))))
+        (_ "/usr/share/cmigemo/utf-8/migemo-dict")))
 (migemo-init)
 
 (defun test-ivy--filter (regex-seq string)
