@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 0.1.3
+;; Version: 1.0.0
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -59,7 +59,8 @@
 
 (defun ivy-migemo--regex (str &optional greedy)
   "Same as `ivy--regex' except using migemo.
-Make regex sequence from STR (greedily if GREEDY is non-nil)."
+Make regex sequence from STR (greedily if GREEDY is non-nil).
+Each string made by splitting STR with space can match Japanese."
   (let ((hashed (unless greedy
                   (gethash str ivy-migemo--regex-hash))))
     (if hashed
@@ -95,7 +96,8 @@ Make regex sequence from STR (greedily if GREEDY is non-nil)."
 
 (defun ivy-migemo--regex-plus (str)
   "Same as `ivy--regex-plus' except using migemo.
-Make regex sequence from STR."
+Make regex sequence from STR.
+Each string made by splitting STR with space or `!' can match Japanese."
   (let ((parts (ivy--split-negation str)))
     (cl-case (length parts)
       (0
@@ -115,7 +117,8 @@ Make regex sequence from STR."
 
 (defun ivy-migemo--regex-fuzzy (str)
   "Same as `ivy--regex-fuzzy' except using migemo.
-Make regex sequence from STR."
+Make regex sequence from STR.
+STR can match Japanese word (but not fuzzy match)."
   (setq str (ivy--trim-trailing-re str))
   (if (string-match "\\`\\(\\^?\\)\\(.*?\\)\\(\\$?\\)\\'" str)
       (prog1
