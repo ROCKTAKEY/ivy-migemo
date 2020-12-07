@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 0.1.2
+;; Version: 0.1.3
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -107,7 +107,7 @@ Make regex sequence from STR."
          (ivy-migemo--regex (car parts))))
       (2
        (cons
-        (cons (ivy--regex (car parts)) t)
+        (cons (ivy-migemo--regex (car parts)) t)
         (mapcar #'(lambda (arg)
                     (list (migemo-get-pattern arg)))
                   (split-string (cadr parts) " " t))))
