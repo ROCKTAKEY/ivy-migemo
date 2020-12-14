@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 1.0.0
+;; Version: 1.0.1
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -144,22 +144,26 @@ STR can match Japanese word (but not fuzzy match)."
   "Toggle the re builder to match fuzzy or not."
   (interactive)
   (setq ivy--old-re nil)
-  (cond
-   ((eq ivy--regex-function 'ivy--regex-fuzzy) (setq ivy--regex-function 'ivy--regex-plus))
-   ((eq ivy--regex-function 'ivy--regex-plus)  (setq ivy--regex-function 'ivy--regex-fuzzy))
-   ((eq ivy--regex-function 'ivy-migemo--regex-fuzzy) (setq ivy--regex-function 'ivy-migemo--regex-plus))
-   ((eq ivy--regex-function 'ivy-migemo--regex-plus)  (setq ivy--regex-function 'ivy-migemo--regex-fuzzy))))
+  (setq
+   ivy--regex-function
+   (pcase ivy--regex-function
+     (`ivy--regex-fuzzy        #'ivy--regex-plus)
+     (`ivy--regex-plus         #'ivy--regex-fuzzy)
+     (`ivy-migemo--regex-fuzzy #'ivy-migemo--regex-plus)
+     (`ivy-migemo--regex-plus  #'ivy-migemo--regex-fuzzy))))
 
 ;;;###autoload
 (defun ivy-migemo-toggle-migemo ()
   "Toggle the re builder to use/unuse migemo."
   (interactive)
   (setq ivy--old-re nil)
-  (cond
-   ((eq ivy--regex-function 'ivy--regex-fuzzy) (setq ivy--regex-function 'ivy-migemo--regex-fuzzy))
-   ((eq ivy--regex-function 'ivy--regex-plus)  (setq ivy--regex-function 'ivy-migemo--regex-plus))
-   ((eq ivy--regex-function 'ivy-migemo--regex-fuzzy) (setq ivy--regex-function 'ivy--regex-fuzzy))
-   ((eq ivy--regex-function 'ivy-migemo--regex-plus)  (setq ivy--regex-function 'ivy--regex-plus))))
+  (setq
+   ivy--regex-function
+   (pcase ivy--regex-function
+     (`ivy--regex-fuzzy        #'ivy-migemo--regex-fuzzy)
+     (`ivy--regex-plus         #'ivy-migemo--regex-plus)
+     (`ivy-migemo--regex-fuzzy #'ivy--regex-fuzzy)
+     (`ivy-migemo--regex-plus  #'ivy--regex-plus))))
 
 (provide 'ivy-migemo)
 ;;; ivy-migemo.el ends here
