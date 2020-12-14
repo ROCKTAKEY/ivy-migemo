@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 1.1.0
+;; Version: 1.1.1
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -37,8 +37,20 @@
 ;;                                   (counsel-find-file . ivy-migemo--regex-plus))
 ;;                                   ;(counsel-other-function . ivy-migemo--regex-plus)
 ;;                                   )
+;;     ;; Or you prefer fuzzy match like ido:
+;;     (setq ivy-re-builders-alist '((t . ivy--regex-plus)
+;;                                   (swiper . ivy-migemo--regex-fuzzy)
+;;                                   (counsel-find-file . ivy-migemo--regex-fuzzy))
+;;                                   ;(counsel-other-function . ivy-migemo--regex-fuzzy)
+;;                                   )
 ;;
-;;
+;;; Functions
+;;;; ~ivy-migemo-toggle-fuzzy~
+;;    Toggle fuzzy match or not on ivy. Almost same as ~ivy-toggle-fuzzy~, except
+;;    this function can also be used to toggle between ~ivy-migemo--regex-fuzzy~ and
+;;    ~ivy-migemo--regex-plus~.
+;;;; ~ivy-migemo-toggle-migemo~
+;;    Toggle using migemo or not on ivy.
 ;;; License
 ;;   This package is licensed by GPLv3.
 
