@@ -17,7 +17,7 @@
                                   ;(counsel-other-function . ivy-migemo--regex-plus)
                                   )
     ;; Or you prefer fuzzy match like ido:
-    (setq ivy-re-builders-alist '((t . ivy--regex-plus)
+    (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)
                                   (swiper . ivy-migemo--regex-fuzzy)
                                   (counsel-find-file . ivy-migemo--regex-fuzzy))
                                   ;(counsel-other-function . ivy-migemo--regex-fuzzy)
