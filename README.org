@@ -2,6 +2,7 @@
 [[file:LICENSE][https://img.shields.io/github/license/ROCKTAKEY/ivy-migemo.svg?style=flat-square]]
 [[https://github.com/ROCKTAKEY/ivy-migemo/actions][https://img.shields.io/github/workflow/status/ROCKTAKEY/ivy-migemo/CI/master.svg?style=flat-square]]
 [[https://codecov.io/gh/ROCKTAKEY/ivy-migemo?branch=master][https://img.shields.io/codecov/c/github/ROCKTAKEY/ivy-migemo/master.svg?style=flat-square]]
+[[https://melpa.org/#/ivy-migemo][file:https://melpa.org/packages/ivy-migemo-badge.svg]]
 * Use migemo on ivy.
 * How to Use?
 #+begin_src emacs-lisp :tangle yes
