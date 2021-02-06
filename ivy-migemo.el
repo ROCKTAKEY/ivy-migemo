@@ -1,11 +1,11 @@
 ;;; ivy-migemo.el --- Use migemo on ivy              -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2020  ROCKTAKEY
+;; Copyright (C) 2020-2021  ROCKTAKEY
 
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 1.1.2
+;; Version: 1.1.3
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -71,6 +71,27 @@
 (defvar ivy-migemo--regex-hash (make-hash-table :test #'equal)
   "Store pre-computed regex.")
 
+(defun ivy-migemo--get-pattern (word)
+  "Same as `migemo-get-pattern' except \"\\(\" is replaced to \"\\(:?\".
+
+WORD"
+  (let* ((str (migemo-get-pattern word))
+         (len (length str))
+         (result nil)
+         (escape? nil)
+         c)
+    (dotimes (i len)
+      (setq c (aref str i))
+      (push
+       (if escape?
+           (if (eq c ?\()
+               "(?:"
+             (char-to-string c))
+         (char-to-string c))
+       result)
+      (setq escape? (and (eq ?\\ c) (not escape?))))
+    (apply #'concat (nreverse result))))
+
 (defun ivy-migemo--regex (str &optional greedy)
   "Same as `ivy--regex' except using migemo.
 Make regex sequence from STR (greedily if GREEDY is non-nil).
@@ -91,7 +112,7 @@ Each string made by splitting STR with space can match Japanese."
                            (setq ivy--subexps 0)
                            (if (string-match-p "\\`\\.[^.]" (car subs))
                                (concat "\\." (substring (car subs) 1))
-                             (migemo-get-pattern (car subs))))
+                             (ivy-migemo--get-pattern (car subs))))
                         (cons
                          (setq ivy--subexps (length subs))
                          (replace-regexp-in-string
@@ -102,7 +123,7 @@ Each string made by splitting STR with space can match Japanese."
                              (if (string-match-p "\\`\\\\([^?][^\0]*\\\\)\\'" x)
                                  x
                                (format "\\(%s\\)"
-                                       (migemo-get-pattern x))))
+                                       (ivy-migemo--get-pattern x))))
                            subs
                            (if greedy ".*" ".*?"))
                           nil t))))
@@ -125,7 +146,7 @@ Each string made by splitting STR with space or `!' can match Japanese."
        (cons
         (cons (ivy-migemo--regex (car parts)) t)
         (mapcar #'(lambda (arg)
-                    (list (migemo-get-pattern arg)))
+                    (list (ivy-migemo--get-pattern arg)))
                   (split-string (cadr parts) " " t))))
       (t (error "Unexpected: use only one !")))))
 
@@ -148,7 +169,7 @@ STR can match Japanese word (but not fuzzy match)."
                           (mapcar (lambda (x) (format "\\(%s\\)" (regexp-quote (char-to-string x))))
                                   lst))
                        "\\)\\|"
-                       ,(migemo-get-pattern (match-string 2 str)))))
+                       ,(ivy-migemo--get-pattern (match-string 2 str)))))
                   (match-string 3 str))
         (setq ivy--subexps (length (match-string 2 str))))
     str))
