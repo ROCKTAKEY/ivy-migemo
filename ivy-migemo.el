@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 1.1.3
+;; Version: 1.1.4
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -46,7 +46,7 @@
 ;;
 ;;; Functions
 ;;;; ~ivy-migemo-toggle-fuzzy~
-;;    Toggle fuzzy match or not on ivy. Almost same as ~ivy-toggle-fuzzy~, except
+;;    Toggle fuzzy match or not on ivy.  Almost same as ~ivy-toggle-fuzzy~, except
 ;;    this function can also be used to toggle between ~ivy-migemo--regex-fuzzy~ and
 ;;    ~ivy-migemo--regex-plus~.
 ;;;; ~ivy-migemo-toggle-migemo~
