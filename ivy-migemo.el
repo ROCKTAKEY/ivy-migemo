@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 1.1.4
+;; Version: 1.1.5
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -218,28 +218,33 @@ STR can match Japanese word (but not fuzzy match)."
      (`ivy-migemo--swiper-re-builder-migemo-regex-plus     #'ivy-migemo--swiper-re-builder-migemo-regex-fuzzy)
      (`ivy-migemo--swiper-re-builder-migemo-regex-fuzzy    #'ivy-migemo--swiper-re-builder-migemo-regex-plus))))
 
+(defun ivy-migemo--toggle-migemo-get (re-func &optional caller)
+  "Get toggled function for RE-FUNC.
+If CALLER is omitted, (`ivy-state-caller' `ivy-last') is used."
+  (pcase re-func
+    (`ivy--regex-fuzzy        #'ivy-migemo--regex-fuzzy)
+    (`ivy--regex-plus         #'ivy-migemo--regex-plus)
+    (`ivy-migemo--regex-fuzzy #'ivy--regex-fuzzy)
+    (`ivy-migemo--regex-plus  #'ivy--regex-plus)
+    (`swiper--re-builder
+     (pcase (ivy-alist-setting ivy-re-builders-alist
+                               (or caller
+                                   (ivy-state-caller ivy-last)))
+       (`ivy--regex-fuzzy        #'ivy-migemo--swiper-re-builder-migemo-regex-fuzzy)
+       (`ivy--regex-plus         #'ivy-migemo--swiper-re-builder-migemo-regex-plus)
+       (`ivy-migemo--regex-fuzzy #'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy)
+       (`ivy-migemo--regex-plus  #'ivy-migemo--swiper-re-builder-no-migemo-regex-plus)))
+    (`ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy #'ivy-migemo--swiper-re-builder-migemo-regex-fuzzy)
+    (`ivy-migemo--swiper-re-builder-no-migemo-regex-plus  #'ivy-migemo--swiper-re-builder-migemo-regex-plus)
+    (`ivy-migemo--swiper-re-builder-migemo-regex-fuzzy    #'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy)
+    (`ivy-migemo--swiper-re-builder-migemo-regex-plus     #'ivy-migemo--swiper-re-builder-no-migemo-regex-plus)))
+
 ;;;###autoload
 (defun ivy-migemo-toggle-migemo ()
   "Toggle the re builder to use/unuse migemo."
   (interactive)
   (setq ivy--old-re nil)
-  (setq
-   ivy--regex-function
-   (pcase ivy--regex-function
-     (`ivy--regex-fuzzy        #'ivy-migemo--regex-fuzzy)
-     (`ivy--regex-plus         #'ivy-migemo--regex-plus)
-     (`ivy-migemo--regex-fuzzy #'ivy--regex-fuzzy)
-     (`ivy-migemo--regex-plus  #'ivy--regex-plus)
-     (`swiper--re-builder
-      (pcase (ivy-alist-setting ivy-re-builders-alist)
-        (`ivy--regex-fuzzy        #'ivy-migemo--swiper-re-builder-migemo-regex-fuzzy)
-        (`ivy--regex-plus         #'ivy-migemo--swiper-re-builder-migemo-regex-plus)
-        (`ivy-migemo--regex-fuzzy #'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy)
-        (`ivy-migemo--regex-plus  #'ivy-migemo--swiper-re-builder-no-migemo-regex-plus)))
-     (`ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy #'ivy-migemo--swiper-re-builder-migemo-regex-fuzzy)
-      (`ivy-migemo--swiper-re-builder-no-migemo-regex-plus  #'ivy-migemo--swiper-re-builder-migemo-regex-plus)
-      (`ivy-migemo--swiper-re-builder-migemo-regex-fuzzy    #'ivy-migemo--swiper-re-builder-no-migemo-regex-plus)
-      (`ivy-migemo--swiper-re-builder-migemo-regex-plus     #'ivy-migemo--swiper-re-builder-no-migemo-regex-plus))))
+  (setq ivy--regex-function (ivy-migemo--toggle-migemo-get ivy--regex-function)))
 
 (provide 'ivy-migemo)
 ;;; ivy-migemo.el ends here

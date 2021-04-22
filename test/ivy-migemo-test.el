@@ -1,4 +1,4 @@
-;;; ivy-migemo-test.el --- Test for ivy-migemo       -*- lexical-binding: t; -*-
+;;; ivy-migemo-test.el --- Test for ivy-migemo
 
 ;; Copyright (C) 2020  ROCKTAKEY
 
@@ -178,6 +178,28 @@
   (should-not (test-ivy--filter
                (ivy-migemo--regex-fuzzy "saikou saitei")
                "最高 is 最低")))
+
+;; toggle migemo getter
+(ert-deftest ivy-migemo--toggle-migemo-get ()
+  (should (eq (ivy-migemo--toggle-migemo-get 'ivy--regex-fuzzy) 'ivy-migemo--regex-fuzzy))
+  (should (eq (ivy-migemo--toggle-migemo-get 'ivy--regex-plus) 'ivy-migemo--regex-plus))
+  (should (eq (ivy-migemo--toggle-migemo-get 'ivy-migemo--regex-fuzzy) 'ivy--regex-fuzzy))
+  (should (eq (ivy-migemo--toggle-migemo-get 'ivy-migemo--regex-plus) 'ivy--regex-plus))
+  (should (eq (ivy-migemo--toggle-migemo-get 'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy) 'ivy-migemo--swiper-re-builder-migemo-regex-fuzzy))
+  (should (eq (ivy-migemo--toggle-migemo-get 'ivy-migemo--swiper-re-builder-no-migemo-regex-plus) 'ivy-migemo--swiper-re-builder-migemo-regex-plus))
+  (should (eq (ivy-migemo--toggle-migemo-get 'ivy-migemo--swiper-re-builder-migemo-regex-fuzzy) 'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy))
+  (should (eq (ivy-migemo--toggle-migemo-get 'ivy-migemo--swiper-re-builder-migemo-regex-plus) 'ivy-migemo--swiper-re-builder-no-migemo-regex-plus)))
+
+(ert-deftest ivy-migemo--toggle-migemo-get-swiper ()
+  (let ((ivy-re-builders-alist
+         '((-regex-fuzzy . ivy--regex-fuzzy)
+           (-regex-plus . ivy--regex-plus)
+           (migemo--regex-fuzzy . ivy-migemo--regex-fuzzy)
+           (migemo--regex-plus . ivy-migemo--regex-plus))))
+    (should (eq (ivy-migemo--toggle-migemo-get 'swiper--re-builder '-regex-fuzzy) 'ivy-migemo--swiper-re-builder-migemo-regex-fuzzy))
+    (should (eq (ivy-migemo--toggle-migemo-get 'swiper--re-builder '-regex-plus) 'ivy-migemo--swiper-re-builder-migemo-regex-plus))
+    (should (eq (ivy-migemo--toggle-migemo-get 'swiper--re-builder 'migemo--regex-fuzzy) 'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy))
+    (should (eq (ivy-migemo--toggle-migemo-get 'swiper--re-builder 'migemo--regex-plus) 'ivy-migemo--swiper-re-builder-no-migemo-regex-plus))))
 
 
 
