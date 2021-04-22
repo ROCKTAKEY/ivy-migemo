@@ -5,8 +5,8 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 1.2.0
-;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2"))
+;; Version: 1.3.0
+;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2") (nadvice "0.3"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
 ;; This program is free software; you can redistribute it and/or modify
@@ -58,6 +58,7 @@
 
 ;;; Code:
 
+(require 'cl-lib)
 (require 'ivy)
 (require 'migemo)
 
@@ -67,6 +68,7 @@
   :prefix "ivy-migemo-")
 
 (declare-function swiper--re-builder "ext:swiper")
+(declare-function swiper--normalize-regex "ext:swiper")
 
 (defvar ivy-migemo--regex-hash (make-hash-table :test #'equal)
   "Store pre-computed regex.")
@@ -303,6 +305,64 @@ This function uses `ivy-migemo--regex-function-alist' and
     (unless (eq old ivy--regex-function)
       (ivy-migemo--run-toggle-migemo-hook
        (memq ivy--regex-function ivy-migemo--migemo-function-list)))))
+
+
+;; For `search-default-mode' handling
+
+(defun ivy-migemo--override-swiper-re-builder-for-search-default-handling (original &rest args)
+  "Override `swiper--re-builder' to handle `search-default-mode'.
+`search-default-mode' is handled when `ivy-migemo' is turned on.
+ORIGINAL and ARGS are for :around advice."
+  (cl-letf (((symbol-function 'swiper--re-builder)
+             (lambda (str)
+               (let* ((re-builder (ivy-alist-setting ivy-re-builders-alist))
+                      (str (replace-regexp-in-string "\\\\n" "\n" str))
+                      (re (funcall re-builder str))
+                      (search-default-mode
+                       (unless (memq re-builder ivy-migemo--migemo-function-list)
+                         search-default-mode)))
+                 (if (consp re)
+                     (mapcar
+                      (lambda (x)
+                        (cons (swiper--normalize-regex (car x))
+                              (cdr x)))
+                      re)
+                   (swiper--normalize-regex re))))))
+    (apply original args)))
+
+(defvar ivy-migemo--swiper-re-builder-list
+  '(swiper
+    swiper-backward
+    swiper-isearch
+    swiper-isearch-backward
+    swiper-all
+    swiper-thing-at-point
+    swiper-all-thing-at-point)
+  "List of functions which use `swiper--re-builder'.")
+
+;;;###autoload
+(define-minor-mode ivy-migemo-search-default-handling-mode
+  "When turned on, override functions which use `swiper--re-builder'
+to handle `search-default-mode' when `ivy-migemo'is turned on."
+  nil
+  ""
+  nil
+  :group 'ivy-migemo
+  (if ivy-migemo-search-default-handling-mode
+      (mapc
+       (lambda (arg)
+         (advice-add arg :around 'ivy-migemo--override-swiper-re-builder-for-search-default-handling))
+       ivy-migemo--swiper-re-builder-list)
+    (mapc
+     (lambda (arg)
+       (advice-remove arg 'ivy-migemo--override-swiper-re-builder-for-search-default-handling))
+     ivy-migemo--swiper-re-builder-list)))
+
+;;;###autoload
+(define-globalized-minor-mode global-ivy-migemo-search-default-handling-mode
+  ivy-migemo-search-default-handling-mode
+  ivy-migemo-search-default-handling-mode
+  :group 'ivy-migemo)
 
 (provide 'ivy-migemo)
 ;;; ivy-migemo.el ends here
