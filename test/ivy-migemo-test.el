@@ -202,7 +202,26 @@
     (should (eq (ivy-migemo--toggle-migemo-get 'swiper--re-builder 'migemo--regex-fuzzy) 'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy))
     (should (eq (ivy-migemo--toggle-migemo-get 'swiper--re-builder 'migemo--regex-plus) 'ivy-migemo--swiper-re-builder-no-migemo-regex-plus))))
 
+;; toggle fuzzy getter
+(ert-deftest ivy-migemo--toggle-fuzzy-get ()
+  (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy--regex-fuzzy) 'ivy--regex-plus))
+  (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy--regex-plus) 'ivy--regex-fuzzy))
+  (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy-migemo--regex-fuzzy) 'ivy-migemo--regex-plus))
+  (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy-migemo--regex-plus) 'ivy-migemo--regex-fuzzy))
+  (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy-migemo--swiper-re-builder-no-migemo-regex-plus) 'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy))
+  (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy) 'ivy-migemo--swiper-re-builder-no-migemo-regex-plus))
+  (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy-migemo--swiper-re-builder-migemo-regex-plus) 'ivy-migemo--swiper-re-builder-migemo-regex-fuzzy)))
 
+(ert-deftest ivy-migemo--toggle-fuzzy-get-swiper ()
+  (let ((ivy-re-builders-alist
+         '((-regex-fuzzy . ivy--regex-fuzzy)
+           (-regex-plus . ivy--regex-plus)
+           (migemo--regex-fuzzy . ivy-migemo--regex-fuzzy)
+           (migemo--regex-plus . ivy-migemo--regex-plus))))
+    (should (eq (ivy-migemo--toggle-fuzzy-get 'swiper--re-builder '-regex-fuzzy) 'ivy-migemo--swiper-re-builder-no-migemo-regex-plus))
+    (should (eq (ivy-migemo--toggle-fuzzy-get 'swiper--re-builder '-regex-plus) 'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy))
+    (should (eq (ivy-migemo--toggle-fuzzy-get 'swiper--re-builder 'migemo--regex-fuzzy) 'ivy-migemo--swiper-re-builder-migemo-regex-plus))
+    (should (eq (ivy-migemo--toggle-fuzzy-get 'swiper--re-builder 'migemo--regex-plus) 'ivy-migemo--swiper-re-builder-migemo-regex-fuzzy))))
 
 (provide 'ivy-migemo-test)
 ;;; ivy-migemo-test.el ends here
