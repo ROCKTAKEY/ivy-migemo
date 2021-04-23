@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 1.3.3
+;; Version: 1.3.4
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2") (nadvice "0.3"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -328,6 +328,7 @@ to handle `search-default-mode' when `ivy-migemo'is turned on."
   ""
   nil
   :group 'ivy-migemo
+  :global t
   (if ivy-migemo-search-default-handling-mode
       (advice-add 'swiper--re-builder
                   :around #'ivy-migemo--search-default-handling-mode-swiper-re-builder)
@@ -335,10 +336,9 @@ to handle `search-default-mode' when `ivy-migemo'is turned on."
                    #'ivy-migemo--search-default-handling-mode-swiper-re-builder)))
 
 ;;;###autoload
-(define-globalized-minor-mode global-ivy-migemo-search-default-handling-mode
-  ivy-migemo-search-default-handling-mode
-  ivy-migemo-search-default-handling-mode
-  :group 'ivy-migemo)
+(define-obsolete-function-alias 'global-ivy-migemo-search-default-handling-mode
+  'ivy-migemo-search-default-handling-mode
+  "1.3.4")
 
 (provide 'ivy-migemo)
 ;;; ivy-migemo.el ends here

@@ -34,8 +34,7 @@
 * Handle ~search-default-mode~
   When you set ~search-default-mode~ a function such as ~char-fold-to-regexp~,
   ~swiper~ might through error or might not work with migemo.
-  Then, You can turn on ~ivy-migemo-search-default-handling-mode~ (buffer-local)
-  or ~global-ivy-migemo-search-default-handling-mode~ (global).
+  Then, You can turn on ~ivy-migemo-search-default-handling-mode~.
   When this mode is turned on, ~swiper--re-builder~ is advised to set
   ~search-default-mode~ ~nil~ with ~ivy-migemo~ on.
 
