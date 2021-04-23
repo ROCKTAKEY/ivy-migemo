@@ -30,5 +30,14 @@
    ~ivy-migemo--regex-plus~.
 ** ~ivy-migemo-toggle-migemo~
    Toggle using migemo or not on ivy.
+
+* Handle ~search-default-mode~
+  When you set ~search-default-mode~ a function such as ~char-fold-to-regexp~,
+  ~swiper~ might through error or might not work with migemo.
+  Then, You can turn on ~ivy-migemo-search-default-handling-mode~ (buffer-local)
+  or ~global-ivy-migemo-search-default-handling-mode~ (global).
+  When this mode is turned on, ~swiper--re-builder~ is advised to set
+  ~search-default-mode~ ~nil~ with ~ivy-migemo~ on.
+
 * License
   This package is licensed by GPLv3. See [[file:LICENSE][LICENSE]].
