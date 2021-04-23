@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 1.3.2
+;; Version: 1.3.3
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2") (nadvice "0.3"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -264,7 +264,7 @@ STR can match Japanese word (but not fuzzy match)."
     (ivy--regex-plus         . ivy-migemo--swiper-re-builder-migemo-regex-plus)
     (ivy-migemo--regex-fuzzy . ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy)
     (ivy-migemo--regex-plus  . ivy-migemo--swiper-re-builder-no-migemo-regex-plus))
-  "Alist whose element is (ummigemo-function . migemo-function).
+  "Alist whose element is (from-function . to-function).
 This variable is used only on `swiper'.
 This is needed because `ivy' is specialized for `swiper'.")
 
