@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 1.4.0
+;; Version: 1.4.1
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2") (nadvice "0.3"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -69,6 +69,8 @@
 
 (declare-function swiper--re-builder "ext:swiper")
 (declare-function swiper--normalize-regex "ext:swiper")
+(declare-function ivy-prescient-re-builder "ext:ivy-prescient")
+(defvar prescient-filter-alist)
 
 (defvar ivy-migemo--regex-hash (make-hash-table :test #'equal)
   "Store pre-computed regex.")
