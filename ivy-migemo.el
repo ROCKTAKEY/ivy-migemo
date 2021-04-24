@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 1.3.5
+;; Version: 1.4.0
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2") (nadvice "0.3"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -226,6 +226,22 @@ STR can match Japanese word (but not fuzzy match)."
   "Apply `swiper--re-builder' forced to use `ivy--regex-fuzzy' with STR as argument."
   (ivy-migemo--swiper-re-builder-with str #'ivy--regex-fuzzy))
 
+(defun ivy-migemo--prescient-regexp (query &rest _)
+  "Similar to `prescient-literal-regexp'.
+Actually, just eval `ivy-migemo--get-pattern' with QUERY."
+  (ivy-migemo--get-pattern query))
+
+(defun ivy-migemo--prescient-re-builder (query)
+  "Similar to `ivy-prescient-re-builder'.
+Use `ivy-migemo--get-pattern' instead of functions of `prescient-filter-alist'.
+QUERY is passed to `ivy-migemo--get-pattern'."
+  (let ((prescient-filter-alist
+         (mapcar
+          (lambda (arg)
+            (cons (car arg) #'ivy-migemo--prescient-regexp))
+          prescient-filter-alist)))
+    (ivy-prescient-re-builder query)))
+
 (defvar ivy-migemo--regex-function-fuzzy-alist
   '((ivy--regex-plus . ivy--regex-fuzzy)
     (ivy-migemo--regex-plus . ivy-migemo--regex-fuzzy)
@@ -273,6 +289,7 @@ This function uses `ivy-migemo--regex-function-alist' and
     ;; Native
     (ivy--regex-fuzzy . ivy-migemo--regex-fuzzy)
     (ivy--regex-plus . ivy-migemo--regex-plus)
+    (ivy-prescient-re-builder . ivy-migemo--prescient-re-builder)
     ;; Defined by ivy-migemo
     (ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy . ivy-migemo--swiper-re-builder-migemo-regex-fuzzy)
     (ivy-migemo--swiper-re-builder-no-migemo-regex-plus . ivy-migemo--swiper-re-builder-migemo-regex-plus))
