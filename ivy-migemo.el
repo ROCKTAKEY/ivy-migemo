@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 1.4.2
+;; Version: 1.4.3
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2") (nadvice "0.3"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -125,6 +125,7 @@ WORD"
       (setq escape? (and (eq ?\\ c) (not escape?))))
     (apply #'concat (nreverse result))))
 
+;;;###autoload
 (defun ivy-migemo--regex (str &optional greedy)
   "Same as `ivy--regex' except using migemo.
 Make regex sequence from STR (greedily if GREEDY is non-nil).
@@ -162,6 +163,7 @@ Each string made by splitting STR with space can match Japanese."
                           nil t))))
                     ivy-migemo--regex-hash)))))
 
+;;;###autoload
 (defun ivy-migemo--regex-plus (str)
   "Same as `ivy--regex-plus' except using migemo.
 Make regex sequence from STR.
@@ -183,6 +185,7 @@ Each string made by splitting STR with space or `!' can match Japanese."
                   (split-string (cadr parts) " " t))))
       (t (error "Unexpected: use only one !")))))
 
+;;;###autoload
 (defun ivy-migemo--regex-fuzzy (str)
   "Same as `ivy--regex-fuzzy' except using migemo.
 Make regex sequence from STR.
