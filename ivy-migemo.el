@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 1.4.4
+;; Version: 1.4.5
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2") (nadvice "0.3"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -367,8 +367,8 @@ ORIGINAL and ARGS are for :around advice."
 
 ;;;###autoload
 (define-minor-mode ivy-migemo-search-default-handling-mode
-  "When turned on, override functions which use `swiper--re-builder'
-to handle `search-default-mode' when `ivy-migemo'is turned on."
+  "Minor mode to override functions which use `swiper--re-builder'.
+This is to handle `search-default-mode' when `ivy-migemo'is turned on."
   nil
   ""
   nil
