@@ -30,12 +30,8 @@ jobs:
       - run: sudo apt install cmigemo
 
       - run: keg install
-      - run: make test-all
-        env:
-          UNDERCOVER_FORCE: true
-      - uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+      - run: keg run test-all
+      - uses: codecov/codecov-action@v2
 
   lint:
     runs-on: ubuntu-latest
