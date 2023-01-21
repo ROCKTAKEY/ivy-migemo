@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 1.4.5
+;; Version: 1.5.0
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2") (nadvice "0.3"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -192,7 +192,7 @@ WORD"
     (apply #'concat (nreverse result))))
 
 ;;;###autoload
-(defun ivy-migemo--regex (str &optional greedy)
+(defun ivy-migemo-regex (str &optional greedy)
   "Same as `ivy--regex' except using migemo.
 Make regex sequence from STR (greedily if GREEDY is non-nil).
 Each string made by splitting STR with space can match Japanese."
@@ -229,8 +229,10 @@ Each string made by splitting STR with space can match Japanese."
                           nil t))))
                     ivy-migemo--regex-hash)))))
 
+(define-obsolete-function-alias 'ivy-migemo--regex #'ivy-migemo-regex "1.5.0")
+
 ;;;###autoload
-(defun ivy-migemo--regex-plus (str)
+(defun ivy-migemo-regex-plus (str)
   "Same as `ivy--regex-plus' except using migemo.
 Make regex sequence from STR.
 Each string made by splitting STR with space or `!' can match Japanese."
@@ -251,8 +253,10 @@ Each string made by splitting STR with space or `!' can match Japanese."
                   (split-string (cadr parts) " " t))))
       (t (error "Unexpected: use only one !")))))
 
+(define-obsolete-function-alias 'ivy-migemo--regex-plus #'ivy-migemo-regex-plus "1.5.0")
+
 ;;;###autoload
-(defun ivy-migemo--regex-fuzzy (str)
+(defun ivy-migemo-regex-fuzzy (str)
   "Same as `ivy--regex-fuzzy' except using migemo.
 Make regex sequence from STR.
 STR can match Japanese word (but not fuzzy match)."
@@ -275,6 +279,8 @@ STR can match Japanese word (but not fuzzy match)."
                   (match-string 3 str))
         (setq ivy--subexps (length (match-string 2 str))))
     str))
+
+(define-obsolete-function-alias 'ivy-migemo--regex-fuzzy #'ivy-migemo-regex-fuzzy "1.5.0")
 
 (defun ivy-migemo--swiper-re-builder-with (str re-builder)
   "Apply `swiper--re-builder' forced to use RE-BUILDER with STR as argument."
