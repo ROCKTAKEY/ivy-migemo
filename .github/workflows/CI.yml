@@ -34,9 +34,6 @@ jobs:
       - run: keg install
       - run: keg run test-all
       - uses: codecov/codecov-action@v2
-        # FIXME: Not work when UNDERCOVER_FORCE does not exist
-        env:
-          UNDERCOVER_FORCE: true
   lint:
     runs-on: ubuntu-latest
     continue-on-error: true
