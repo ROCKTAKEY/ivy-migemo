@@ -288,19 +288,23 @@ STR can match Japanese word (but not fuzzy match)."
     (swiper--re-builder str)))
 
 (defun ivy-migemo--swiper-re-builder-migemo-regex-plus (str)
-  "Apply `swiper--re-builder' forced to use `ivy-migemo-regex-plus' with STR as argument."
+  "Apply `swiper--re-builder' forced to use `ivy-migemo-regex-plus'.
+STR is used as argument of `swiper--re-builder'."
   (ivy-migemo--swiper-re-builder-with str #'ivy-migemo-regex-plus))
 
 (defun ivy-migemo--swiper-re-builder-migemo-regex-fuzzy (str)
-  "Apply `swiper--re-builder' forced to use `ivy-migemo-regex-fuzzy' with STR as argument."
+  "Apply `swiper--re-builder' forced to use `ivy-migemo-regex-fuzzy'.
+STR is used as argument of `swiper--re-builder'."
   (ivy-migemo--swiper-re-builder-with str #'ivy-migemo-regex-fuzzy))
 
 (defun ivy-migemo--swiper-re-builder-no-migemo-regex-plus (str)
-  "Apply `swiper--re-builder' forced to use `ivy--regex-plus' with STR as argument."
+  "Apply `swiper--re-builder' forced to use `ivy--regex-plus'.
+STR is used as argument of `swiper--re-builder'."
   (ivy-migemo--swiper-re-builder-with str #'ivy--regex-plus))
 
 (defun ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy (str)
-  "Apply `swiper--re-builder' forced to use `ivy--regex-fuzzy' with STR as argument."
+  "Apply `swiper--re-builder' forced to use `ivy--regex-fuzzy'.
+STR is used as argument of `swiper--re-builder'."
   (ivy-migemo--swiper-re-builder-with str #'ivy--regex-fuzzy))
 
 ;; (defun ivy-migemo--prescient-regexp (query &rest _)
