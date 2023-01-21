@@ -20,6 +20,8 @@ jobs:
           - '26.3'
           - '27.1'
           - '27.2'
+          - '28.1'
+          - '28.2'
           - 'snapshot'
     steps:
       - uses: actions/checkout@v1
@@ -30,13 +32,8 @@ jobs:
       - run: sudo apt install cmigemo
 
       - run: keg install
-      - run: make test-all
-        env:
-          UNDERCOVER_FORCE: true
-      - uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-
+      - run: keg run test-all
+      - uses: codecov/codecov-action@v2
   lint:
     runs-on: ubuntu-latest
     continue-on-error: true
@@ -44,6 +41,6 @@ jobs:
       - uses: actions/checkout@v1
       - uses: purcell/setup-emacs@master
         with:
-          version: '27.2'
+          version: '28.2'
       - uses: conao3/setup-keg@master
-      - run: make lint
+      - run: keg lint

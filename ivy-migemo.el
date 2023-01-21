@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 1.5.0
+;; Version: 1.5.1
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2") (nadvice "0.3"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
@@ -243,11 +243,11 @@ Each string made by splitting STR with space or `!' can match Japanese."
       (1
        (if (= (aref str 0) ?!)
            (list (cons "" t)
-                 (list (ivy-migemo--regex (car parts))))
-         (ivy-migemo--regex (car parts))))
+                 (list (ivy-migemo-regex (car parts))))
+         (ivy-migemo-regex (car parts))))
       (2
        (cons
-        (cons (ivy-migemo--regex (car parts)) t)
+        (cons (ivy-migemo-regex (car parts)) t)
         (mapcar #'(lambda (arg)
                     (list (ivy-migemo--get-pattern arg)))
                   (split-string (cadr parts) " " t))))
@@ -288,19 +288,23 @@ STR can match Japanese word (but not fuzzy match)."
     (swiper--re-builder str)))
 
 (defun ivy-migemo--swiper-re-builder-migemo-regex-plus (str)
-  "Apply `swiper--re-builder' forced to use `ivy-migemo--regex-plus' with STR as argument."
-  (ivy-migemo--swiper-re-builder-with str #'ivy-migemo--regex-plus))
+  "Apply `swiper--re-builder' forced to use `ivy-migemo-regex-plus'.
+STR is used as argument of `swiper--re-builder'."
+  (ivy-migemo--swiper-re-builder-with str #'ivy-migemo-regex-plus))
 
 (defun ivy-migemo--swiper-re-builder-migemo-regex-fuzzy (str)
-  "Apply `swiper--re-builder' forced to use `ivy-migemo--regex-fuzzy' with STR as argument."
-  (ivy-migemo--swiper-re-builder-with str #'ivy-migemo--regex-fuzzy))
+  "Apply `swiper--re-builder' forced to use `ivy-migemo-regex-fuzzy'.
+STR is used as argument of `swiper--re-builder'."
+  (ivy-migemo--swiper-re-builder-with str #'ivy-migemo-regex-fuzzy))
 
 (defun ivy-migemo--swiper-re-builder-no-migemo-regex-plus (str)
-  "Apply `swiper--re-builder' forced to use `ivy--regex-plus' with STR as argument."
+  "Apply `swiper--re-builder' forced to use `ivy--regex-plus'.
+STR is used as argument of `swiper--re-builder'."
   (ivy-migemo--swiper-re-builder-with str #'ivy--regex-plus))
 
 (defun ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy (str)
-  "Apply `swiper--re-builder' forced to use `ivy--regex-fuzzy' with STR as argument."
+  "Apply `swiper--re-builder' forced to use `ivy--regex-fuzzy'.
+STR is used as argument of `swiper--re-builder'."
   (ivy-migemo--swiper-re-builder-with str #'ivy--regex-fuzzy))
 
 ;; (defun ivy-migemo--prescient-regexp (query &rest _)
@@ -321,11 +325,11 @@ STR can match Japanese word (but not fuzzy match)."
 ;;           prescient-filter-alist)))
 ;;     (ivy-prescient-re-builder query)))
 
-(defalias 'ivy-migemo--prescient-re-builder 'ivy-migemo--regex-plus)
+(defalias 'ivy-migemo--prescient-re-builder 'ivy-migemo-regex-plus)
 
 (defvar ivy-migemo--regex-function-fuzzy-alist
   '((ivy--regex-plus . ivy--regex-fuzzy)
-    (ivy-migemo--regex-plus . ivy-migemo--regex-fuzzy)
+    (ivy-migemo-regex-plus . ivy-migemo-regex-fuzzy)
     (ivy-migemo--swiper-re-builder-no-migemo-regex-plus . ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy)
     (ivy-migemo--swiper-re-builder-migemo-regex-plus . ivy-migemo--swiper-re-builder-migemo-regex-fuzzy))
   "Alist whose element is (unfuzzy-function . fuzzy-function).")
@@ -333,8 +337,8 @@ STR can match Japanese word (but not fuzzy match)."
 (defvar ivy-migemo--swiper-regex-function-fuzzy-alist
   '((ivy--regex-fuzzy . ivy-migemo--swiper-re-builder-no-migemo-regex-plus)
     (ivy--regex-plus . ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy)
-    (ivy-migemo--regex-fuzzy . ivy-migemo--swiper-re-builder-migemo-regex-plus)
-    (ivy-migemo--regex-plus . ivy-migemo--swiper-re-builder-migemo-regex-fuzzy))
+    (ivy-migemo-regex-fuzzy . ivy-migemo--swiper-re-builder-migemo-regex-plus)
+    (ivy-migemo-regex-plus . ivy-migemo--swiper-re-builder-migemo-regex-fuzzy))
   "Alist whose element is (from-function . to-function).
 This variable is used only on `swiper'.
 This is needed because `ivy' is specialized for `swiper'.")
@@ -368,8 +372,8 @@ This function uses `ivy-migemo--regex-function-alist' and
 (defvar ivy-migemo--regex-function-alist
   '(
     ;; Native
-    (ivy--regex-fuzzy . ivy-migemo--regex-fuzzy)
-    (ivy--regex-plus . ivy-migemo--regex-plus)
+    (ivy--regex-fuzzy . ivy-migemo-regex-fuzzy)
+    (ivy--regex-plus . ivy-migemo-regex-plus)
     (ivy-prescient-re-builder . ivy-migemo--prescient-re-builder)
     ;; Defined by ivy-migemo
     (ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy . ivy-migemo--swiper-re-builder-migemo-regex-fuzzy)
@@ -379,16 +383,16 @@ This function uses `ivy-migemo--regex-function-alist' and
 (defvar ivy-migemo--swiper-regex-function-alist
   '((ivy--regex-fuzzy        . ivy-migemo--swiper-re-builder-migemo-regex-fuzzy)
     (ivy--regex-plus         . ivy-migemo--swiper-re-builder-migemo-regex-plus)
-    (ivy-migemo--regex-fuzzy . ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy)
-    (ivy-migemo--regex-plus  . ivy-migemo--swiper-re-builder-no-migemo-regex-plus))
+    (ivy-migemo-regex-fuzzy . ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy)
+    (ivy-migemo-regex-plus  . ivy-migemo--swiper-re-builder-no-migemo-regex-plus))
   "Alist whose element is (from-function . to-function).
 This variable is used only on `swiper'.
 This is needed because `ivy' is specialized for `swiper'.")
 
 (defvar ivy-migemo--migemo-function-list
-  '(ivy-migemo--regex
-    ivy-migemo--regex-fuzzy
-    ivy-migemo--regex-plus
+  '(ivy-migemo-regex
+    ivy-migemo-regex-fuzzy
+    ivy-migemo-regex-plus
     ivy-migemo--swiper-re-builder-migemo-regex-fuzzy
     ivy-migemo--swiper-re-builder-migemo-regex-plus)
   "List of functions which are migemo-ized.")
@@ -441,9 +445,6 @@ ORIGINAL and ARGS are for :around advice."
 (define-minor-mode ivy-migemo-search-default-handling-mode
   "Minor mode to override functions which use `swiper--re-builder'.
 This is to handle `search-default-mode' when `ivy-migemo'is turned on."
-  nil
-  ""
-  nil
   :group 'ivy-migemo
   :global t
   (if ivy-migemo-search-default-handling-mode

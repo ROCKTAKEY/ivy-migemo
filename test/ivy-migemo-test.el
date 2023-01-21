@@ -52,140 +52,140 @@
 ;; regex
 (ert-deftest ivy-migemo--regex-hiragana ()
   (should (test-ivy--filter
-           (ivy-migemo--regex "aiueo")
+           (ivy-migemo-regex "aiueo")
            "あいうえお"))
   (should (test-ivy--filter
-           (ivy-migemo--regex "aiueo")
+           (ivy-migemo-regex "aiueo")
            "I am あいうえお"))
   (should (test-ivy--filter
-           (ivy-migemo--regex "aiueo kakikukeko")
+           (ivy-migemo-regex "aiueo kakikukeko")
            "あいうえお is かきくけこ"))
   (should-not (test-ivy--filter
-               (ivy-migemo--regex "aiueo kakikukeko")
+               (ivy-migemo-regex "aiueo kakikukeko")
                "あいうえお is さしすせそ")))
 
 (ert-deftest ivy-migemo--regex-katakana ()
   (should (test-ivy--filter
-           (ivy-migemo--regex "aiueo")
+           (ivy-migemo-regex "aiueo")
            "アイウエオ"))
   (should (test-ivy--filter
-           (ivy-migemo--regex "aiueo")
+           (ivy-migemo-regex "aiueo")
            "I am アイウエオ"))
   (should (test-ivy--filter
-           (ivy-migemo--regex "aiueo kakikukeko")
+           (ivy-migemo-regex "aiueo kakikukeko")
            "アイウエオ is カキクケコ")))
 
 (ert-deftest ivy-migemo--regex-kanji ()
   (should (test-ivy--filter
-           (ivy-migemo--regex "saikou")
+           (ivy-migemo-regex "saikou")
            "最高"))
   (should (test-ivy--filter
-           (ivy-migemo--regex "saikou")
+           (ivy-migemo-regex "saikou")
            "I am 最高"))
   (should (test-ivy--filter
-           (ivy-migemo--regex "saikou saitei")
+           (ivy-migemo-regex "saikou saitei")
            "最高 最低"))
   (should-not (test-ivy--filter
-               (ivy-migemo--regex "saikou teigaku")
+               (ivy-migemo-regex "saikou teigaku")
                "最高 最低")))
 
 (ert-deftest ivy-migemo--regex-plus-hiragana ()
   (should (test-ivy--filter
-           (ivy-migemo--regex-plus "aiueo")
+           (ivy-migemo-regex-plus "aiueo")
            "あいうえお"))
   (should (test-ivy--filter
-           (ivy-migemo--regex-plus "aiueo")
+           (ivy-migemo-regex-plus "aiueo")
            "I am あいうえお"))
   (should (test-ivy--filter
-           (ivy-migemo--regex-plus "aiueo kakikukeko")
+           (ivy-migemo-regex-plus "aiueo kakikukeko")
            "あいうえお is かきくけこ"))
   (should (test-ivy--filter
-           (ivy-migemo--regex-plus "aiueo ! kakikukeko")
+           (ivy-migemo-regex-plus "aiueo ! kakikukeko")
            "あいうえお さしすせそ"))
   (should-not (test-ivy--filter
-               (ivy-migemo--regex-plus "aiueo ! kakikukeko")
+               (ivy-migemo-regex-plus "aiueo ! kakikukeko")
                "あいうえお is かきくけこ")))
 
 (ert-deftest ivy-migemo--regex-plus-katakana ()
   (should (test-ivy--filter
-           (ivy-migemo--regex-plus "aiueo")
+           (ivy-migemo-regex-plus "aiueo")
            "アイウエオ"))
   (should (test-ivy--filter
-           (ivy-migemo--regex-plus "aiueo")
+           (ivy-migemo-regex-plus "aiueo")
            "I am アイウエオ"))
   (should (test-ivy--filter
-           (ivy-migemo--regex-plus "aiueo kakikukeko")
+           (ivy-migemo-regex-plus "aiueo kakikukeko")
            "アイウエオ is カキクケコ"))
   (should (test-ivy--filter
-           (ivy-migemo--regex-plus "aiueo ! kakikukeko")
+           (ivy-migemo-regex-plus "aiueo ! kakikukeko")
            "アイウエオ サシスセソ"))
   (should-not (test-ivy--filter
-               (ivy-migemo--regex-plus "aiueo ! kakikukeko")
+               (ivy-migemo-regex-plus "aiueo ! kakikukeko")
                "アイウエオ is カキクケコ")))
 
 (ert-deftest ivy-migemo--regex-plus-kanji ()
   (should (test-ivy--filter
-           (ivy-migemo--regex-plus "saikou")
+           (ivy-migemo-regex-plus "saikou")
            "最高"))
   (should (test-ivy--filter
-           (ivy-migemo--regex-plus "saikou")
+           (ivy-migemo-regex-plus "saikou")
            "I am 最高"))
   (should (test-ivy--filter
-           (ivy-migemo--regex-plus "saikou saitei")
+           (ivy-migemo-regex-plus "saikou saitei")
            "最高 最低"))
   (should-not (test-ivy--filter
-               (ivy-migemo--regex-plus "saikou teigaku")
+               (ivy-migemo-regex-plus "saikou teigaku")
                "最高 最低"))
   (should (test-ivy--filter
-           (ivy-migemo--regex-plus "saikou ! teigaku")
+           (ivy-migemo-regex-plus "saikou ! teigaku")
            "最高 最低"))
   (should-not (test-ivy--filter
-               (ivy-migemo--regex-plus "saikou ! saitei")
+               (ivy-migemo-regex-plus "saikou ! saitei")
                "最高 is 最低")))
 
 ;; fuzzy
 (ert-deftest ivy-migemo--regex-fuzzy-hiragana ()
   (should (test-ivy--filter
-           (ivy-migemo--regex-fuzzy "aiueo")
+           (ivy-migemo-regex-fuzzy "aiueo")
            "あいうえお"))
   (should (test-ivy--filter
-           (ivy-migemo--regex-fuzzy "aiueo")
+           (ivy-migemo-regex-fuzzy "aiueo")
            "I am あいうえお"))
   (should-not (test-ivy--filter
-               (ivy-migemo--regex-fuzzy "aiueo kakikukeko")
+               (ivy-migemo-regex-fuzzy "aiueo kakikukeko")
                "あいうえお is かきくけこ")))
 
 (ert-deftest ivy-migemo--regex-fuzzy-katakana ()
   (should (test-ivy--filter
-           (ivy-migemo--regex-fuzzy "aiueo")
+           (ivy-migemo-regex-fuzzy "aiueo")
            "アイウエオ"))
   (should (test-ivy--filter
-           (ivy-migemo--regex-fuzzy "aiueo")
+           (ivy-migemo-regex-fuzzy "aiueo")
            "I am アイウエオ"))
   (should-not (test-ivy--filter
-               (ivy-migemo--regex-fuzzy "aiueo kakikukeko")
+               (ivy-migemo-regex-fuzzy "aiueo kakikukeko")
                "アイウエオ is カキクケコ")))
 
 (ert-deftest ivy-migemo--regex-fuzzy-kanji ()
   (should (test-ivy--filter
-           (ivy-migemo--regex-fuzzy "saikou")
+           (ivy-migemo-regex-fuzzy "saikou")
            "最高"))
   (should (test-ivy--filter
-           (ivy-migemo--regex-fuzzy "saikou")
+           (ivy-migemo-regex-fuzzy "saikou")
            "I am 最高"))
   (should-not (test-ivy--filter
-               (ivy-migemo--regex-fuzzy "saikou saitei")
+               (ivy-migemo-regex-fuzzy "saikou saitei")
                "最高 最低"))
   (should-not (test-ivy--filter
-               (ivy-migemo--regex-fuzzy "saikou saitei")
+               (ivy-migemo-regex-fuzzy "saikou saitei")
                "最高 is 最低")))
 
 ;; toggle migemo getter
 (ert-deftest ivy-migemo--toggle-migemo-get ()
-  (should (eq (ivy-migemo--toggle-migemo-get 'ivy--regex-fuzzy) 'ivy-migemo--regex-fuzzy))
-  (should (eq (ivy-migemo--toggle-migemo-get 'ivy--regex-plus) 'ivy-migemo--regex-plus))
-  (should (eq (ivy-migemo--toggle-migemo-get 'ivy-migemo--regex-fuzzy) 'ivy--regex-fuzzy))
-  (should (eq (ivy-migemo--toggle-migemo-get 'ivy-migemo--regex-plus) 'ivy--regex-plus))
+  (should (eq (ivy-migemo--toggle-migemo-get 'ivy--regex-fuzzy) 'ivy-migemo-regex-fuzzy))
+  (should (eq (ivy-migemo--toggle-migemo-get 'ivy--regex-plus) 'ivy-migemo-regex-plus))
+  (should (eq (ivy-migemo--toggle-migemo-get 'ivy-migemo-regex-fuzzy) 'ivy--regex-fuzzy))
+  (should (eq (ivy-migemo--toggle-migemo-get 'ivy-migemo-regex-plus) 'ivy--regex-plus))
   (should (eq (ivy-migemo--toggle-migemo-get 'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy) 'ivy-migemo--swiper-re-builder-migemo-regex-fuzzy))
   (should (eq (ivy-migemo--toggle-migemo-get 'ivy-migemo--swiper-re-builder-no-migemo-regex-plus) 'ivy-migemo--swiper-re-builder-migemo-regex-plus))
   (should (eq (ivy-migemo--toggle-migemo-get 'ivy-migemo--swiper-re-builder-migemo-regex-fuzzy) 'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy))
@@ -195,8 +195,8 @@
   (let ((ivy-re-builders-alist
          '((-regex-fuzzy . ivy--regex-fuzzy)
            (-regex-plus . ivy--regex-plus)
-           (migemo--regex-fuzzy . ivy-migemo--regex-fuzzy)
-           (migemo--regex-plus . ivy-migemo--regex-plus))))
+           (migemo--regex-fuzzy . ivy-migemo-regex-fuzzy)
+           (migemo--regex-plus . ivy-migemo-regex-plus))))
     (should (eq (ivy-migemo--toggle-migemo-get 'swiper--re-builder '-regex-fuzzy) 'ivy-migemo--swiper-re-builder-migemo-regex-fuzzy))
     (should (eq (ivy-migemo--toggle-migemo-get 'swiper--re-builder '-regex-plus) 'ivy-migemo--swiper-re-builder-migemo-regex-plus))
     (should (eq (ivy-migemo--toggle-migemo-get 'swiper--re-builder 'migemo--regex-fuzzy) 'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy))
@@ -206,8 +206,8 @@
 (ert-deftest ivy-migemo--toggle-fuzzy-get ()
   (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy--regex-fuzzy) 'ivy--regex-plus))
   (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy--regex-plus) 'ivy--regex-fuzzy))
-  (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy-migemo--regex-fuzzy) 'ivy-migemo--regex-plus))
-  (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy-migemo--regex-plus) 'ivy-migemo--regex-fuzzy))
+  (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy-migemo-regex-fuzzy) 'ivy-migemo-regex-plus))
+  (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy-migemo-regex-plus) 'ivy-migemo-regex-fuzzy))
   (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy-migemo--swiper-re-builder-no-migemo-regex-plus) 'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy))
   (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy) 'ivy-migemo--swiper-re-builder-no-migemo-regex-plus))
   (should (eq (ivy-migemo--toggle-fuzzy-get 'ivy-migemo--swiper-re-builder-migemo-regex-plus) 'ivy-migemo--swiper-re-builder-migemo-regex-fuzzy)))
@@ -216,8 +216,8 @@
   (let ((ivy-re-builders-alist
          '((-regex-fuzzy . ivy--regex-fuzzy)
            (-regex-plus . ivy--regex-plus)
-           (migemo--regex-fuzzy . ivy-migemo--regex-fuzzy)
-           (migemo--regex-plus . ivy-migemo--regex-plus))))
+           (migemo--regex-fuzzy . ivy-migemo-regex-fuzzy)
+           (migemo--regex-plus . ivy-migemo-regex-plus))))
     (should (eq (ivy-migemo--toggle-fuzzy-get 'swiper--re-builder '-regex-fuzzy) 'ivy-migemo--swiper-re-builder-no-migemo-regex-plus))
     (should (eq (ivy-migemo--toggle-fuzzy-get 'swiper--re-builder '-regex-plus) 'ivy-migemo--swiper-re-builder-no-migemo-regex-fuzzy))
     (should (eq (ivy-migemo--toggle-fuzzy-get 'swiper--re-builder 'migemo--regex-fuzzy) 'ivy-migemo--swiper-re-builder-migemo-regex-plus))
