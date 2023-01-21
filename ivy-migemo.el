@@ -5,7 +5,7 @@
 ;; Author: ROCKTAKEY <rocktakey@gmail.com>
 ;; Keywords: matching
 
-;; Version: 1.5.0
+;; Version: 1.5.1
 ;; Package-Requires: ((emacs "24.3") (ivy "0.13.0") (migemo "1.9.2") (nadvice "0.3"))
 
 ;; URL: https://github.com/ROCKTAKEY/ivy-migemo
